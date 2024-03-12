@@ -7,9 +7,8 @@ import android.view.View
 import android.widget.RemoteViews
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import com.magnetwidgets.magnet.impl.BackgroundColorPiece
-import com.magnetwidgets.magnet.impl.BackgroundResourcePiece
-import com.magnetwidgets.magnet.impl.text.TextViewTextPiece
+import com.magnetwidgets.magnet.impl.*
+import com.magnetwidgets.magnet.impl.text.*
 import com.widgetsmagnet.ksp.MagnetPiece
 
 class Magnet(
@@ -22,8 +21,9 @@ class Magnet(
         private val _globalPieces = arrayOf(
             BackgroundResourcePiece(),
             BackgroundColorPiece(),
-            TextViewTextPiece()
+            *textPieces
         )
+
         val globalPieces: HashMap<String, Piece> = hashMapOf<String, Piece>().apply {
             _globalPieces.forEach { this.register(it) }
         }

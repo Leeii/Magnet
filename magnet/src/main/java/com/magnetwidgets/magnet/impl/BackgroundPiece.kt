@@ -1,10 +1,7 @@
 package com.magnetwidgets.magnet.impl
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.RemoteViews
-import androidx.core.graphics.drawable.DrawableCompat
 import com.magnetwidgets.magnet.Piece
 import com.magnetwidgets.magnet.illegalArgument
 import com.widgetsmagnet.ksp.MagnetPiece
