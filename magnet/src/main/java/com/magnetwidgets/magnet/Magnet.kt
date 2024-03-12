@@ -8,6 +8,7 @@ import android.widget.RemoteViews
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import com.magnetwidgets.magnet.impl.*
+import com.magnetwidgets.magnet.impl.image.imageViewPieces
 import com.magnetwidgets.magnet.impl.text.*
 import com.widgetsmagnet.ksp.MagnetPiece
 
@@ -21,7 +22,8 @@ class Magnet(
         private val _globalPieces = arrayOf(
             BackgroundResourcePiece(),
             BackgroundColorPiece(),
-            *textPieces
+            *textPieces,
+            *imageViewPieces
         )
 
         val globalPieces: HashMap<String, Piece> = hashMapOf<String, Piece>().apply {
