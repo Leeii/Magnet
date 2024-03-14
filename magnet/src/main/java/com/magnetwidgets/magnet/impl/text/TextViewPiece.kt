@@ -31,7 +31,7 @@ class TextViewTextPiece : BasePiece<TextView>() {
 @MagnetPiece("setTextColor", [MagnetPiece.ValueType.Int], ["color"])
 class TextColorPiece : BasePiece<TextView>() {
     override fun updateAppView(view: TextView, vararg values: Any) {
-        view.setTextColor(values.obtain())
+        view.setTextColor(values.obtain() ?: 0)
     }
 
     override fun updateRemoteView(views: RemoteViews, viewId: Int, vararg values: Any) {

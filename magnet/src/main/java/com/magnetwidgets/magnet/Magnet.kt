@@ -48,7 +48,7 @@ class Magnet(
     private var childViews: SparseArray<View> = SparseArray()
 
     lateinit var rootView: View
-    internal lateinit var rootRemoteViews: RemoteViews
+    lateinit var rootRemoteViews: RemoteViews
 
 
     init {
