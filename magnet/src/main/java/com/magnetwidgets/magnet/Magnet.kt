@@ -11,6 +11,7 @@ import com.magnetwidgets.magnet.impl.*
 import com.magnetwidgets.magnet.impl.image.imageViewPieces
 import com.magnetwidgets.magnet.impl.text.*
 import com.widgetsmagnet.ksp.MagnetPiece
+import com.widgetsmagnet.ksp.identifier
 
 class Magnet(
     context: Context,
@@ -81,5 +82,5 @@ class Magnet(
 fun <T : Piece> HashMap<String, in Piece>.register(piece: T) {
     val magnetPiece =
         piece::class.annotations.first { it is MagnetPiece } as? MagnetPiece ?: return
-    this[magnetPiece.name] = piece
+    this[magnetPiece.identifier] = piece
 }

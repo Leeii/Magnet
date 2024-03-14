@@ -12,5 +12,6 @@ class MainActivity : ComponentActivity() {
         val magnet = Magnet(this, R.layout.activity_main)
         setContentView(magnet.rootView)
         magnet.setBackgroundResource(R.id.textView, R.drawable.ic_launcher_background)
+
     }
 }

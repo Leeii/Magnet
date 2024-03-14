@@ -19,10 +19,9 @@ class MagnetPieceProcessor(val codeGenerator: CodeGenerator, val logger: KSPLogg
     override fun process(resolver: Resolver): List<KSAnnotated> {
         val symbols = resolver.getSymbolsWithAnnotation(MagnetPiece::class.java.name)
         val ret = symbols.filter { !it.validate() }.toList()
-        symbols.filter { it.validate() }
-            .forEach {
-                it.accept(TestVisitor(), Unit)
-            }
+        symbols.filter { it.validate() }.forEach {
+            it.accept(TestVisitor(), Unit)
+        }
         return ret
     }
 
@@ -32,26 +31,43 @@ class MagnetPieceProcessor(val codeGenerator: CodeGenerator, val logger: KSPLogg
             val piece =
                 classDeclaration.getAnnotationsByType(MagnetPiece::class).firstOrNull() ?: return
             val name = piece.name
+            val identifier = piece.identifier
             val className =
-                "${name.replaceFirst(name.first(), name.first().uppercaseChar())}Extension"
+                "${
+                    identifier.replace(Regex("[, ()]"), "")
+                        .replaceFirst(name.first(), name.first().uppercaseChar())
+                }Extension"
             val packageName = classDeclaration.containingFile!!.packageName.asString()
             val file = codeGenerator.createNewFile(
-                Dependencies(true),
-                packageName,
-                className
+                Dependencies(true), packageName, className
             )
-
-            val valueTypePackage = piece.valueType.packageName()
 
             val sb = StringBuilder()
             sb.append("package $packageName\n\n")
             sb.append("import androidx.annotation.IdRes\n")
-            if (valueTypePackage != null) {
-                sb.append("import $valueTypePackage.${piece.valueType.name}\n")
+
+            val parameterTypes = piece.parameterTypes
+            val valueNames = piece.parameterNames
+            parameterTypes.distinct().forEach { type ->
+                type.packageName()?.also {
+                    sb.append("import $it.${type.name}\n")
+                }
             }
             sb.append("import com.magnetwidgets.magnet.Magnet\n\n")
-            sb.append("fun Magnet.$name(@IdRes viewId: Int, vararg values: ${piece.valueType.name}) {\n")
-            sb.append("    execute(\"$name\", viewId, *values${if (piece.valueType.needTypedArray()) ".toTypedArray()" else ""})\n")
+            sb.append("fun Magnet.$name(@IdRes viewId: Int, ")
+            parameterTypes.forEachIndexed { index, valueType ->
+                val parameterName = valueNames.getOrNull(index) ?: "value${index}"
+                sb.append("$parameterName: ${valueType.name}")
+                if (index != parameterTypes.size - 1) {
+                    sb.append(", ")
+                }
+            }
+            sb.append(") {\n")
+            sb.append("    execute(\"$identifier\", viewId, *arrayOf(")
+            sb.append(Array(parameterTypes.size) {
+                valueNames.getOrNull(it) ?: "value${it}"
+            }.joinToString(", "))
+            sb.append("))\n")
             sb.append("}")
             file.write(sb.toString().encodeToByteArray())
         }

@@ -1,8 +1,8 @@
 package com.magnetwidgets.magnet.impl.image
 
-import android.view.View
 import android.widget.ImageView
 import android.widget.RemoteViews
+import com.magnetwidgets.magnet.BasePiece
 import com.magnetwidgets.magnet.Piece
 import com.magnetwidgets.magnet.extension.getBitmap
 import com.magnetwidgets.magnet.extension.getIcon
@@ -17,10 +17,10 @@ val imageViewPieces: Array<Piece> = arrayOf(
     ImageViewUriPiece()
 )
 
-@MagnetPiece("setImageViewBitmap", MagnetPiece.ValueType.Bitmap)
-class ImageViewBitmapPiece : Piece {
-    override fun updateView(view: View, vararg values: Any) {
-        (view as? ImageView)?.setImageBitmap(values.getBitmap())
+@MagnetPiece("setImageViewBitmap", [MagnetPiece.ValueType.Bitmap], ["bitmap"])
+class ImageViewBitmapPiece : BasePiece<ImageView>() {
+    override fun updateAppView(view: ImageView, vararg values: Any) {
+        view.setImageBitmap(values.getBitmap())
     }
 
     override fun updateRemoteView(views: RemoteViews, viewId: Int, vararg values: Any) {
@@ -28,10 +28,11 @@ class ImageViewBitmapPiece : Piece {
     }
 }
 
-@MagnetPiece("setImageViewIcon", MagnetPiece.ValueType.Icon)
-class ImageViewIconPiece : Piece {
-    override fun updateView(view: View, vararg values: Any) {
-        (view as? ImageView)?.setImageIcon(values.getIcon())
+@MagnetPiece("setImageViewIcon", [MagnetPiece.ValueType.Icon], ["icon"])
+class ImageViewIconPiece : BasePiece<ImageView>() {
+
+    override fun updateAppView(view: ImageView, vararg values: Any) {
+        view.setImageIcon(values.getIcon())
     }
 
     override fun updateRemoteView(views: RemoteViews, viewId: Int, vararg values: Any) {
@@ -39,10 +40,11 @@ class ImageViewIconPiece : Piece {
     }
 }
 
-@MagnetPiece("setImageViewResource", MagnetPiece.ValueType.Icon)
-class ImageViewResourcePiece : Piece {
-    override fun updateView(view: View, vararg values: Any) {
-        (view as? ImageView)?.setImageResource(values.getInt())
+@MagnetPiece("setImageViewResource", [MagnetPiece.ValueType.Int], ["id"])
+class ImageViewResourcePiece : BasePiece<ImageView>() {
+
+    override fun updateAppView(view: ImageView, vararg values: Any) {
+        view.setImageResource(values.getInt())
     }
 
     override fun updateRemoteView(views: RemoteViews, viewId: Int, vararg values: Any) {
@@ -50,10 +52,11 @@ class ImageViewResourcePiece : Piece {
     }
 }
 
-@MagnetPiece("setImageViewUri", MagnetPiece.ValueType.Icon)
-class ImageViewUriPiece : Piece {
-    override fun updateView(view: View, vararg values: Any) {
-        (view as? ImageView)?.setImageURI(values.getUri())
+@MagnetPiece("setImageViewUri", [MagnetPiece.ValueType.Uri], ["imageUri"])
+class ImageViewUriPiece : BasePiece<ImageView>() {
+
+    override fun updateAppView(view: ImageView, vararg values: Any) {
+        view.setImageURI(values.getUri())
     }
 
     override fun updateRemoteView(views: RemoteViews, viewId: Int, vararg values: Any) {

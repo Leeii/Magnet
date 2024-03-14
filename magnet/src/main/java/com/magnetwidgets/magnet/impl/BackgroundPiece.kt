@@ -6,7 +6,7 @@ import com.magnetwidgets.magnet.Piece
 import com.magnetwidgets.magnet.extension.getInt
 import com.widgetsmagnet.ksp.MagnetPiece
 
-@MagnetPiece("setBackgroundResource", MagnetPiece.ValueType.Int)
+@MagnetPiece("setBackgroundResource", [MagnetPiece.ValueType.Int], ["id"])
 class BackgroundResourcePiece : Piece {
     override fun updateView(view: View, vararg values: Any) {
         view.setBackgroundResource(values.getInt())
@@ -17,7 +17,7 @@ class BackgroundResourcePiece : Piece {
     }
 }
 
-@MagnetPiece("setBackgroundColor", MagnetPiece.ValueType.Int)
+@MagnetPiece("setBackgroundColor", [MagnetPiece.ValueType.Int], ["color"])
 class BackgroundColorPiece : Piece {
     override fun updateView(view: View, vararg values: Any) {
         view.setBackgroundColor(values.getInt())
@@ -27,4 +27,3 @@ class BackgroundColorPiece : Piece {
         views.setInt(viewId, "setBackgroundColor", values.getInt())
     }
 }
-
