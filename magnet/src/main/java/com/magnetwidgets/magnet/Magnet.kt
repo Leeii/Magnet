@@ -21,8 +21,8 @@ class Magnet(
 
     companion object {
         private val _globalPieces = arrayOf(
-            BackgroundResourcePiece(),
-            BackgroundColorPiece(),
+            *backgroundPieces,
+            *viewPieces,
             *textPieces,
             *imageViewPieces
         )
